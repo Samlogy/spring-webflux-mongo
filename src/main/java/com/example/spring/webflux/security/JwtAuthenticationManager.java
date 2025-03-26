@@ -3,10 +3,12 @@ package com.example.spring.webflux.security;
 import org.springframework.security.authentication.ReactiveAuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
 import java.util.Collections;
+import java.util.List;
 
 @Component
 public class JwtAuthenticationManager implements ReactiveAuthenticationManager {
@@ -23,8 +25,10 @@ public class JwtAuthenticationManager implements ReactiveAuthenticationManager {
 
         if (jwtUtil.validateToken(authToken)) {
             String username = jwtUtil.getUsernameFromJWT(authToken);
-            // Create an authentication token with no roles for simplicity.
-            Authentication auth = new UsernamePasswordAuthenticationToken(username, null, Collections.emptyList());
+            String role = jwtUtil.getRoleFromJWT(authToken);
+            // Prefix role with "ROLE_" as expected by Spring Security
+            List<SimpleGrantedAuthority> authorities = List.of(new SimpleGrantedAuthority("ROLE_" + role));
+            Authentication auth = new UsernamePasswordAuthenticationToken(username, null, authorities);
             return Mono.just(auth);
         } else {
             return Mono.empty();

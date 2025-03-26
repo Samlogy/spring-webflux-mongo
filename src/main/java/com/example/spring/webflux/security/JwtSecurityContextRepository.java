@@ -13,7 +13,6 @@ import reactor.core.publisher.Mono;
 public class JwtSecurityContextRepository implements ServerSecurityContextRepository {
 
     private static final String TOKEN_PREFIX = "Bearer ";
-
     private final JwtAuthenticationManager authenticationManager;
 
     public JwtSecurityContextRepository(JwtAuthenticationManager authenticationManager) {
@@ -22,7 +21,7 @@ public class JwtSecurityContextRepository implements ServerSecurityContextReposi
 
     @Override
     public Mono<Void> save(ServerWebExchange swe, SecurityContext sc) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        throw new UnsupportedOperationException("Not supported.");
     }
 
     @Override
