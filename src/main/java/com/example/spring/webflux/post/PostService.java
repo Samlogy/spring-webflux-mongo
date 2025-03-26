@@ -14,6 +14,15 @@ public class PostService {
         this.webClient = webClient;
     }
 
+    public Flux<String> callSecureAdminEndpoint() {
+        String token = "admin_token";
+        return  webClient.get()
+                .uri("/products/admin/secure")
+                .header("Authorization", "Bearer " + token)
+                .retrieve()
+                .bodyToFlux(String.class);
+    }
+
     public Flux<Post> getAllPosts() {
         return webClient.get()
                 .uri("/posts")
