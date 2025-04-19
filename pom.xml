@@ -8,9 +8,10 @@
 		<version>3.4.4</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
+	
 	<groupId>com.example</groupId>
 	<artifactId>spring-webflux</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.0-RELEASE</version>
 	<name>spring-webflux</name>
 	<description>Spring Webflux</description>
 	<url/>
@@ -109,6 +110,24 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+		
+	<!-- Nexus Repos -->
+	<profiles>
+	    <profile>
+	      <id>local-nexus</id>
+	      <distributionManagement>
+		<snapshotRepository>
+		  <id>nexus.snapshot</id>
+		  <url>http://localhost:8081/repository/nexus-snapshots/</url>
+		</snapshotRepository>
+		<repository>
+		  <id>nexus.release</id>
+		  <url>http://localhost:8081/repository/nexus-releases/</url>
+		</repository>
+	      </distributionManagement>
+	    </profile>
+	</profiles>
+
 
 	<build>
 		<plugins>
